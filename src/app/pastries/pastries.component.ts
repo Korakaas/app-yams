@@ -5,11 +5,14 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './pastries.component.html',
   styleUrls: ['./pastries.component.scss']
 })
-export class PastriesComponent implements OnInit {
-
+export class PastriesComponent implements OnInit // Interface OnInit 
+{
+  titlePage: string = "Page principale : Liste des pâtisseries";
+  
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit(): void // permet d'initialiser au montage du component
+  {
   }
 
 }
