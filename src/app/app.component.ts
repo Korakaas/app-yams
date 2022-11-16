@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+
 
 @Component({
   selector: 'app-root', //tag HTML à appeler 
@@ -7,4 +8,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app-yams';
+  search:string;
+  
+  onSubmitForm () {
+
+    // console.log(this.search)
+    // ou
+    // this.result = form.controls['username'].value;
+  }
 }

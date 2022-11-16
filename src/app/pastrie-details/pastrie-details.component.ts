@@ -9,14 +9,19 @@ import { INGREDIENTS_LISTS } from '../pastries/mock-pastries';
 export class PastrieDetailsComponent implements OnInit {
   ingredientsList: List[] = INGREDIENTS_LISTS; //récupération de la liste des listes d'ingrédients
   ingredients:string[] = []; //liste des ingrédients pour la pastrie séclectionnée
-
+  addIngredient:string;
 
   @Input() pastrie: Pastrie
   constructor() { }
-  CLickMe(event: KeyboardEvent)
+  ClickMe(event :Event) {
+    this.addIngredient = (event.target as HTMLInputElement).value;
+    this.ingredients.push(this.addIngredient);
+    console.log(this.ingredients)
+  }
+  deleteIngedient(event :Event)
   {
-    const key = event.key;
-    console.log("Clicked");
+    const ingredientToDelete = this.ingredients.indexOf((event.target as HTMLInputElement).value);
+    this.ingredients.splice(ingredientToDelete,1)
   }
   ngOnInit(): void {
 
