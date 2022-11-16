@@ -1,1 +1,53 @@
-<h1>{{titlePage}}</h1> <!--double accolage permet datainding mais que dans un sens -->
+
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+        <a class="navbar-brand" href="#">App-Yam</a>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Se connecter</a>
+          </li>
+        </ul>
+        <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+<div class="container-fluid">
+    <div  class="mx-auto col-7" *ngIf="pastries">
+        <h1>{{titlePage}}</h1> <!--double accolage permet datainding mais que dans un sens -->
+        <div class="card mb-2" *ngFor="let pastrie of pastries" >
+            <div class="card-header">Pâtisserie</div>
+            <div class="card-body">
+                <h5 class="card-title">{{pastrie.name}}</h5>
+                <p class="card-text">{{pastrie.description}}</p>
+                <ul class="p-0" *ngIf="pastrie.tags">
+                    <li class="list-inline-item justify-content-start" *ngFor="let tag of pastrie.tags">
+                        <span class=" badge text-white text-bg-info">{{tag}}</span>
+                    </li>
+                </ul>
+            
+                <span class="border border-dark px-1 rounded-1">fr</span>
+                <span class="m-2" *ngIf="pastrie.like"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                </svg> {{pastrie.like}} </span> <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-fast-forward-fill" viewBox="0 0 16 16">
+                    <path d="M7.596 7.304a.802.802 0 0 1 0 1.392l-6.363 3.692C.713 12.69 0 12.345 0 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692Z"/>
+                    <path d="M15.596 7.304a.802.802 0 0 1 0 1.392l-6.363 3.692C8.713 12.69 8 12.345 8 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692Z"/>
+                </svg> {{pastrie.quantity}} unités disponibles</span>        
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- <ul *ngIf="pastries">
+    <li class="list-inline-item" *ngFor="let pastrie of pastries">
+        <span class=" badge text-bg-primary">{{pastrie.id}}</span> {{pastrie.name}}
+    </li>
+</ul> -->
