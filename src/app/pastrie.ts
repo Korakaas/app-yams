@@ -1,4 +1,4 @@
-export class Pastrie {
+export interface Pastrie {
     id: string;
     ref: string;
     name: string;
@@ -10,7 +10,7 @@ export class Pastrie {
     like?: string;
 }
 
-export class List
+export interface List
 {
     id: string;
     list: string[];

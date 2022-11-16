@@ -1,0 +1,25 @@
+
+<!-- {{pastrie | json}} //convertit en json les données pour débugguer -->
+
+<div class="card" *ngIf="pastrie" style="width: 18rem;">
+    <img src="{{pastrie?.url}}" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">{{pastrie?.name}}</h5>
+      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    </div>
+    <ul class="list-group list-group-flush" *ngIf="pastrie.tags">
+        <li class ="list-group-item" *ngFor="let ingredient of ingredients">
+{{ingredient}}
+        </li>
+    </ul>
+    
+<label for="label{{pastrie.id}}">Ajouter un ingrédients</label>
+<!-- <input name="label{{pastrie.id}}"type="text" (keyup) = CLickMe($event)> évènement géré avec parenthèse nom évènement -->
+
+<input name="label{{pastrie.id}}"type="text" #saisieClavier (keyup) = "0"> <!-- on écoute l'évènement et l'event est stocké automatiquement dans saisieClavier-->
+ <p>{{saisieClavier.value}}</p> <!-- On exploite le résultat saisie-->
+
+</div>
+
+
+

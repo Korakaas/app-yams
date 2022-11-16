@@ -1,4 +1,4 @@
-import { Pastrie, List } from '../pastrie';
+import { Pastrie, List} from '../pastrie';
 
 //mock ensemble de données fictive qui servent de réference
 
