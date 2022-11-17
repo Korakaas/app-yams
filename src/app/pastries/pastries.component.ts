@@ -45,9 +45,6 @@ export class PastriesComponent implements OnInit // Interface OnInit
   selectPastry(pastry: Pastrie): void
   {
     this.selectedPastry = pastry;
-
-      
-
   }
   ngOnChanges(): void
   {
