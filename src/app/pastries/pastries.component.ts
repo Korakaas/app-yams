@@ -12,7 +12,6 @@ export class PastriesComponent implements OnInit // Interface OnInit
 {
   titlePage: string = "Page principale : Liste des pâtisseries";
   pastries: Pastrie[]|null = PASTRIES;
-  mockPastries: Pastrie[] = PASTRIES;
   selectedPastry: Pastrie;
   @Input() search: string;
   constructor() { }
@@ -24,12 +23,13 @@ export class PastriesComponent implements OnInit // Interface OnInit
   {
     this.pastries = [];
     // console.log(`recherche ${search}`)
-    this.mockPastries?.forEach(mockPastrie => 
+    PASTRIES?.forEach(PASTRIE => 
      {
-      if(mockPastrie.name === search)
+      const allPastries = PASTRIE.name.toLowerCase
+      if(PASTRIE.name.toLowerCase().includes(search.toLowerCase()))
       {
         // console.log(`après si : ${mockPastrie.name}`)
-        this.pastries?.push(mockPastrie);
+        this.pastries?.push(PASTRIE);
         console.log(this.pastries)
       }})
        console.log(this.pastries)
@@ -54,7 +54,6 @@ export class PastriesComponent implements OnInit // Interface OnInit
     if(this.search ==="")
     {
       this.pastries = PASTRIES;
-    }
-    
+    } 
   }
 }

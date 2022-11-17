@@ -10,10 +10,14 @@ export class AppComponent {
   title = 'app-yams';
   search:string;
   
-  onSubmitForm () {
-
-    // console.log(this.search)
-    // ou
-    // this.result = form.controls['username'].value;
+  searching(event: Event)
+  {
+    this.search = (event.target as HTMLInputElement).value
   }
+  // onSubmitForm () {
+
+  //   // console.log(this.search)
+  //   // ou
+  //   // this.result = form.controls['username'].value;
+  // }
 }
