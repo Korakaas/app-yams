@@ -11,14 +11,14 @@
     </div>
     <div class="col-9" *ngIf="pastries">
       <h1>{{titlePage}}</h1> <!--double accolage permet datainding mais que dans un sens -->
-      <div class="card mb-2" *ngFor="let pastrie of pastries" >
+      <div class="card mb-2" appBorderCard = 'red' *ngFor="let pastrie of pastries" >
           <div class="card-header">Pâtisserie</div>
           <div class="card-body">
               <h5 class="card-title">{{pastrie.name}}</h5>
               <p class="card-text">{{pastrie.description}}</p>
               <ul class="p-0" *ngIf="pastrie.tags">
                   <li class="list-inline-item justify-content-start" *ngFor="let tag of pastrie.tags">
-                      <span class=" badge text-white text-bg-info">{{tag}}</span>
+                      <span class=" {{tag | pastrieTagColor}}  badge text-white text-bg-info">{{tag}}</span> <!--{{tag | pastrieTagColor}}-->
                   </li>
               </ul>
           

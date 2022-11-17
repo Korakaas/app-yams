@@ -4,12 +4,16 @@ import {FormsModule} from '@angular/forms'
 import { AppComponent } from './app.component';
 import { PastriesComponent } from './pastries/pastries.component';
 import { PastrieDetailsComponent } from './pastrie-details/pastrie-details.component';
+import { PastrieTagColorPipe } from './pastrie-tag-color.pipe';
+import { BorderCardDirective } from './border-card.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     PastriesComponent,
-    PastrieDetailsComponent
+    PastrieDetailsComponent,
+    PastrieTagColorPipe,
+    BorderCardDirective
   ],
   imports: [
     BrowserModule,
