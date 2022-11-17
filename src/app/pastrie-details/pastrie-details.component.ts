@@ -9,26 +9,34 @@ import { INGREDIENTS_LISTS } from '../pastries/mock-pastries';
 export class PastrieDetailsComponent implements OnInit {
   ingredientsList: List[] = INGREDIENTS_LISTS; //récupération de la liste des listes d'ingrédients
   ingredients:string[] = []; //liste des ingrédients pour la pastrie séclectionnée
-  addIngredient:string;
+
 
   @Input() pastrie: Pastrie
   constructor() { }
-  ClickMe(event :Event) {
-    this.addIngredient = (event.target as HTMLInputElement).value;
-    this.ingredients.push(this.addIngredient);
-    console.log(this.ingredients)
+  AddIngredient(event :Event) {
+    const inputIngredient = (event.target as HTMLInputElement).value; //event.target cible de l'évènement (input dans ce cas) Angular ne comprend paa  event.target du coup faut rajouter HTMLInputElement pour lui dire le type de l'évènement
+    this.ingredients.push(inputIngredient);
   }
-  deleteIngedient(event :Event)
+  deleteIngedient(ingredientD: string)
   {
-    const ingredientToDelete = this.ingredients.indexOf((event.target as HTMLInputElement).value);
-    this.ingredients.splice(ingredientToDelete,1)
+    // const ingredientToDelete = this.ingredients.indexOf(ingredientD);
+    // this.ingredients.splice(ingredientToDelete,1)
+    //autre méthode possible
+    const filtered = this.ingredients.filter((ingredient:string) =>
+    {
+      //filter permet de décider ce qu'on garde ou non dans le tableau selon une condition 
+      return ingredient !== ingredientD;
+    })
+    // const filtered = this.ingredients.filter((ingredient:string) => ingredient !== ingredientD)
+
+    this.ingredients = filtered;
   }
   ngOnInit(): void {
 
     console.log(this.pastrie);
   }
 
-  ngOnChanges(): void //appeler automatiquement on n des ékément du composent ets modifié (par exemple quand il recoit un nouveau input)
+  ngOnChanges(): void //appeler automatiquement on n des élément du composent ets modifié (par exemple quand il recoit un nouveau input)
   {
     if(this.pastrie)
     {
