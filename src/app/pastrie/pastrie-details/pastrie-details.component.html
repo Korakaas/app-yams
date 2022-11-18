@@ -2,13 +2,13 @@
 <!-- {{pastrie | json}} //convertit en json les données pour débugguer -->
 
 <div class="card" *ngIf="pastrie" style="width: 18rem;">
-    <img src="{{pastrie?.url}}" class="card-img-top" alt="...">
+    <img src="{{pastrie.url}}" class="card-img-top" alt="...">
     <div class="card-body">
-      <h5 class="card-title">{{pastrie?.name}}</h5>
+      <h5 class="card-title">{{pastrie.name}}</h5>
       <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
     </div>
     <button appHideButton="invisible">Cacher ingrédients <ul class="list-group list-group-flush" *ngIf="ingredients" > 
-      <li class ="list-group-item"> Liste des ingrédients  <button (click) = 'sortIngredient($event)'>{{sortRef}}</button></li>       
+      <li class ="list-group-item"> Liste des ingrédients  <button (click) = 'sortIngredient()'>{{sortRef}}</button></li>       
       <li class ="list-group-item " *ngFor="let ingredient of ingredients">
   <div class="row justify-content-around">
       <p class="col-4">{{ingredient}}</p>

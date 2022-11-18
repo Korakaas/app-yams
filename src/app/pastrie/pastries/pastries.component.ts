@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Pastrie } from '../pastrie';
-import { PASTRIES } from './mock-pastries';
+import { PastrieService } from '../pastrie.service';
 
 
 @Component({
@@ -11,21 +11,34 @@ import { PASTRIES } from './mock-pastries';
 export class PastriesComponent implements OnInit // Interface OnInit 
 {
   titlePage: string = "Page principale : Liste des pâtisseries";
-  pastries: Pastrie[]|null = PASTRIES;
-  selectedPastry: Pastrie;
+  pastries: Pastrie[]|null;
+  selectedPastry: Pastrie|null;
+  pastrieServiceInstance: PastrieService;
   @Input() search: string|null;
-  constructor() { }
 
+  //injection de dépendance
+  constructor(private pastrieServiceFile: PastrieService) {
+    this.pastrieServiceInstance = pastrieServiceFile;
+   }
+  getPastries()
+  {
+    this.pastries = this.pastrieServiceInstance.getPastries()
+  }
+
+  getPastrie(id:string)
+  {
+    this.selectedPastry = this.pastrieServiceInstance.getPastrie(id);
+  }
   ngOnInit(): void // permet d'initialiser au montage du component
   {
+    this.getPastries(); //on récupère le tableau des pâtisseries à chaque fois que le composant html se créer
   }
   filter(search: string): boolean
   {
     this.pastries = [];
     // console.log(`recherche ${search}`)
-    PASTRIES?.forEach(PASTRIE => 
+    this.pastrieServiceInstance.getPastries()?.forEach(PASTRIE => 
      {
-      const allPastries = PASTRIE.name.toLowerCase
       if(PASTRIE.name.toLowerCase().includes(search.toLowerCase()))
       {
         // console.log(`après si : ${mockPastrie.name}`)
@@ -42,10 +55,10 @@ export class PastriesComponent implements OnInit // Interface OnInit
       return false;
     }
   }
-  selectPastry(pastry: Pastrie): void
-  {
-    this.selectedPastry = pastry;
-  }
+  // selectPastry(pastry: Pastrie): void
+  // {
+  //   this.selectedPastry = pastry;
+  // }
   ngOnChanges(): void
   {
     console.log(this.search);
@@ -53,7 +66,7 @@ export class PastriesComponent implements OnInit // Interface OnInit
     {this.filter(this.search)}
     if(this.search ==="")
     {
-      this.pastries = PASTRIES;
+      this.pastries = this.pastrieServiceInstance.getPastries();
     } 
   }
 }
