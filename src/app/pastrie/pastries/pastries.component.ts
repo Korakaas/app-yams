@@ -27,7 +27,7 @@ export class PastriesComponent implements OnInit // Interface OnInit
   }
   filterPastries(event: Pastrie[])
   {
-    this.pastries = [];
+    // this.pastries = [];
     this.pastries = event;
   }
   getPastrie(id:string)
@@ -66,7 +66,7 @@ export class PastriesComponent implements OnInit // Interface OnInit
   // }
   ngOnChanges(): void
   {
-    this.pastries = [];
+    // this.pastries = [];
     // console.log(this.search);
     // if(this.search !== null)
     // {this.filter(this.search)}
