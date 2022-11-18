@@ -4,12 +4,13 @@ import { PastrieDetailsComponent } from './pastrie-details/pastrie-details.compo
 import { PastriesComponent } from './pastries/pastries.component';
 import { BorderCardDirective } from './border-card.directive';
 import { PastrieTagColorPipe } from './pastrie-tag-color.pipe';
+import { SearchModule } from '../search/search.module';
 @NgModule({
   declarations: [
     PastriesComponent,
     PastrieDetailsComponent,
     BorderCardDirective,
-    PastrieTagColorPipe
+    PastrieTagColorPipe,
   ],
   exports:
   [
@@ -19,7 +20,8 @@ import { PastrieTagColorPipe } from './pastrie-tag-color.pipe';
   ],
 
   imports: [
-    CommonModule
+    CommonModule,
+    SearchModule
   ]
 })
 export class PastrieModule { }

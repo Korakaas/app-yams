@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Pastrie } from '../pastrie';
 import { PastrieService } from '../pastrie.service';
+import { SearchComponent } from 'src/app/search/search.component';
 
 
 @Component({
@@ -24,7 +25,11 @@ export class PastriesComponent implements OnInit // Interface OnInit
   {
     this.pastries = this.pastrieServiceInstance.getPastries()
   }
-
+  filterPastries(event: Pastrie[])
+  {
+    this.pastries = [];
+    this.pastries = event;
+  }
   getPastrie(id:string)
   {
     this.selectedPastry = this.pastrieServiceInstance.getPastrie(id);
@@ -61,12 +66,15 @@ export class PastriesComponent implements OnInit // Interface OnInit
   // }
   ngOnChanges(): void
   {
-    console.log(this.search);
-    if(this.search !== null)
-    {this.filter(this.search)}
-    if(this.search ==="")
-    {
-      this.pastries = this.pastrieServiceInstance.getPastries();
-    } 
+    this.pastries = [];
+    // console.log(this.search);
+    // if(this.search !== null)
+    // {this.filter(this.search)}
+    // if(this.search ==="")
+    // {
+    //   this.pastries = this.pastrieServiceInstance.getPastries();
+    // } 
   }
+
+
 }

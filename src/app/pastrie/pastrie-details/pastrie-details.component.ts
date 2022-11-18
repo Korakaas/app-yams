@@ -31,11 +31,12 @@ export class PastrieDetailsComponent implements OnInit {
       this.ingredients = this.pastrieServiceInstance.getPastrieIngredientsList(this.pastrie.id);
     }
   }
-  AddIngredient(event :Event) {
+  AddIngredient(event :Event):void
+  {
     const inputIngredient = (event.target as HTMLInputElement).value; //event.target cible de l'évènement (input dans ce cas) Angular ne comprend paa  event.target du coup faut rajouter HTMLInputElement pour lui dire le type de l'évènement
     this.ingredients.push(inputIngredient);
   }
-  deleteIngedient(ingredientD: string)
+  deleteIngedient(ingredientD: string): void
   {
     // const ingredientToDelete = this.ingredients.indexOf(ingredientD);
     // this.ingredients.splice(ingredientToDelete,1)
@@ -49,7 +50,7 @@ export class PastrieDetailsComponent implements OnInit {
 
     this.ingredients = filtered;
   }
-  sortIngredient()
+  sortIngredient():void
   {
     switch(this.sortRef)
     {
