@@ -13,7 +13,7 @@ export class PastriesComponent implements OnInit // Interface OnInit
   titlePage: string = "Page principale : Liste des pâtisseries";
   pastries: Pastrie[]|null = PASTRIES;
   selectedPastry: Pastrie;
-  @Input() search: string;
+  @Input() search: string|null;
   constructor() { }
 
   ngOnInit(): void // permet d'initialiser au montage du component
@@ -49,7 +49,7 @@ export class PastriesComponent implements OnInit // Interface OnInit
   ngOnChanges(): void
   {
     console.log(this.search);
-    if(this.search !== undefined)
+    if(this.search !== null)
     {this.filter(this.search)}
     if(this.search ==="")
     {

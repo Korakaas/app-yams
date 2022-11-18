@@ -9,7 +9,7 @@ import { INGREDIENTS_LISTS } from '../pastries/mock-pastries';
 export class PastrieDetailsComponent implements OnInit {
   ingredientsList: List[] = INGREDIENTS_LISTS; //récupération de la liste des listes d'ingrédients
   ingredients:string[] = []; //liste des ingrédients pour la pastrie séclectionnée
-
+  sortRef: string = "asc";
 
   @Input() pastrie: Pastrie
   constructor() { }
@@ -35,7 +35,6 @@ export class PastrieDetailsComponent implements OnInit {
 
     console.log(this.pastrie);
   }
-
   ngOnChanges(): void //appeler automatiquement on n des élément du composent ets modifié (par exemple quand il recoit un nouveau input)
   {
     if(this.pastrie)
@@ -45,5 +44,22 @@ export class PastrieDetailsComponent implements OnInit {
       this.ingredients = this.ingredientsList.find(elem => elem.id === this.pastrie?.id)?.list || [];
     }
   }
+  sortIngredient(event: Event)
+  {
+    switch(this.sortRef)
+    {
+      case "asc":
+        this.ingredients.sort((a, b) => a.localeCompare(b));
+        this.sortRef = "des";
+        break;
+      case "des":
+        this.ingredients.sort((a, b) => a.localeCompare(b));
+        this.ingredients = this.ingredients.reverse()
+        this.sortRef = "asc";
+        break;
+    }
 
+
+    
+  }
 }
