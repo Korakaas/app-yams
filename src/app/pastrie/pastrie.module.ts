@@ -5,6 +5,29 @@ import { PastriesComponent } from './pastries/pastries.component';
 import { BorderCardDirective } from './border-card.directive';
 import { PastrieTagColorPipe } from './pastrie-tag-color.pipe';
 import { SearchModule } from '../search/search.module';
+import { Routes, RouterModule } from '@angular/router';
+import { LoginComponent } from '../login-component/login-component.component';
+import { PastrieDescriptionComponent } from './pastrie-description/pastrie-description.component';
+
+const pastriesRoutes: Routes = [
+  {
+    path: 'pastries', 
+    component: PastriesComponent
+  },
+  {
+    path:'',
+    redirectTo: '/pastries',
+    pathMatch: 'full'
+  },
+  {
+    path: 'login',
+    component: LoginComponent
+  }, 
+  {
+    path: 'pastrie/:id', 
+    component: PastrieDescriptionComponent
+  }
+];
 @NgModule({
   declarations: [
     PastriesComponent,
@@ -21,7 +44,8 @@ import { SearchModule } from '../search/search.module';
 
   imports: [
     CommonModule,
-    SearchModule
+    SearchModule,
+    RouterModule.forRoot(pastriesRoutes)  
   ]
 })
 export class PastrieModule { }

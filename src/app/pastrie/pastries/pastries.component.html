@@ -1,6 +1,5 @@
 
 <app-search (searchResult)="filterPastries($event)"></app-search>
-
 <div *ngIf="pastries"> <div class="container-fluid">
   <div class="row">
     <div class="col">
@@ -18,7 +17,7 @@
       <div class="card mb-2" appBorderCard = 'red' *ngFor="let pastrie of pastries" >
           <div class="card-header">Pâtisserie</div>
           <div class="card-body">
-              <h5 class="card-title">{{pastrie.name}}</h5>
+              <h5 class="card-title"><a routerLink="/pastrie/{{pastrie.id}}" >{{pastrie.name}}</a></h5>
               <p class="card-text">{{pastrie.description}}</p>
               <ul class="p-0" *ngIf="pastrie.tags">
                   <li class="list-inline-item justify-content-start" *ngFor="let tag of pastrie.tags">

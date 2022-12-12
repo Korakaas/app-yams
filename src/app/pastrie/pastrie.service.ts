@@ -22,7 +22,7 @@ export class PastrieService {
     });
   }
   
-  getPastrie(id:string): Pastrie|null
+  getPastrie(id:string|null): Pastrie|null
   {
     this.pastrie = this.allPastries?.find( pastrie => pastrie.id === id) || null;
     return this.pastrie;
@@ -33,7 +33,6 @@ export class PastrieService {
     this.PastrieIngredientsList = this.ingredientsList.find(list =>list.id === pastrieId)?.list || [];
     return this.PastrieIngredientsList;
   }
-
   search(pastrieName:string): Pastrie[]|null
   {
     console.log('test');

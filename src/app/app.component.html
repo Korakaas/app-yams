@@ -8,9 +8,10 @@
         <a class="navbar-brand" href="#">App-Yam</a>
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Se connecter</a>
+            <a class="nav-link active" routerLink="/login" routerLinkActive="active">Se connecter</a>
           </li>
         </ul>
+        
         <!-- <form  class="d-flex" role="search">
           <input (keyup.enter) = "searching($event)" name ="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         </form> -->
@@ -21,6 +22,6 @@
       </div>
     </div>
   </nav>
-  <app-pastries [search] = "search"> </app-pastries> <!--la valeur qui fait référence à la valeur parent c'est pas entre crochet -->
+  <router-outlet></router-outlet><!--la valeur qui fait référence à la valeur parent c'est pas entre crochet -->
 </div>
 
