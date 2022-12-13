@@ -22,10 +22,10 @@ export class PastrieService {
     });
   }
   
-  getPastrie(id:string|null): Pastrie|null
+  getPastrie(id:string|null): Pastrie
   {
     this.pastrie = this.allPastries?.find( pastrie => pastrie.id === id) || null;
-    return this.pastrie;
+    return this.pastrie!;
   }
 
   getPastrieIngredientsList(pastrieId:string): string[]
@@ -33,7 +33,7 @@ export class PastrieService {
     this.PastrieIngredientsList = this.ingredientsList.find(list =>list.id === pastrieId)?.list || [];
     return this.PastrieIngredientsList;
   }
-  search(pastrieName:string): Pastrie[]|null
+  search(pastrieName:string): Pastrie[]
   {
     console.log('test');
     console.log(pastrieName);
@@ -51,6 +51,27 @@ export class PastrieService {
       return pastries.name.toLowerCase().includes(pastrieName.toLowerCase())})
 
       console.log(this.searchedPastrie)
-       return this.searchedPastrie
+       return this.searchedPastrie!
+  }
+
+  add(pastrieName:string): Pastrie[]
+  {
+    console.log('test');
+    console.log(pastrieName);
+    // this.getPastries()?.forEach(pastrie => 
+    //   {
+        
+    //    if(pastrie.name.toLowerCase().includes(pastrieName.toLowerCase()))
+    //    {
+    //     // console.log(pastrie);
+    //     // console.log(pastrieName);
+    //     this.searchedPastrie?.push(pastrie);
+    //     console.log(this.searchedPastrie)
+    //    }})
+      this.searchedPastrie = this.getPastries().filter((pastries) => {
+      return pastries.name.toLowerCase().includes(pastrieName.toLowerCase())})
+
+      console.log(this.searchedPastrie)
+       return this.searchedPastrie!
   }
 }
