@@ -1,0 +1,51 @@
+<div class="card" style="width: 50%; margin:2rem auto">
+    <!-- <h1 class=" card-header">
+        Connection
+    </h1> -->
+    <div class="card-body">
+        <h1 class="card-title">Ajouter une pâtisserie</h1>
+  
+  </div>
+        <form (ngSubmit)="onSubmit(formAddPastrie.value)" #formAddPastrie="ngForm">
+            <div class="mb-3">
+                <label for="id" class="form-label">id</label>
+                <input name="id" ngModel required type="text" #id="ngModel" class="form-control" id="id"
+                    aria-describedby="id">
+            </div>
+            <div class="mb-3">
+                <label for="ref" class="form-label">ref</label>
+                <input name="ref" minlength="8"  ngModel required #ref="ngModel" type="text" class="form-control" id="ref">
+            </div>
+            <div class="mb-3">
+                <label for="name" class="form-label">Nom</label>
+                <input name="name" minlength="8"  ngModel required #ref="ngModel" type="text" class="form-control" id="name">
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">description</label>
+                <input name="description" minlength="8"  ngModel required #description="ngModel" type="text" class="form-control" id="description">
+            </div>
+            <div class="mb-3">
+                <label for="url" class="form-label">url</label>
+                <input name="url" minlength="8"  ngModel  #url="ngModel" type="text" class="form-control" id="url">
+            </div>
+            <div class="mb-3">
+                <label for="quantity" class="form-label">quantity</label>
+                <input name="quantity" minlength="8"  ngModel required #quantity="ngModel" type="text" class="form-control" id="quantity">
+            </div>
+            <div class="mb-3">
+                <label for="order" class="form-label">order</label>
+                <input name="order" minlength="8"  ngModel required #order="ngModel" type="text" class="form-control" id="order">
+            </div>
+            <div class="mb-3">
+                <label for="tags" class="form-label">tags</label>
+                <input name="tags" minlength="8"  ngModel  #tags="ngModel" type="text" class="form-control" id="tags">
+            </div>
+            <div class="mb-3">
+                <label for="like" class="form-label">like</label>
+                <input name="like" minlength="8"  ngModel  #like="ngModel" type="text" class="form-control" id="like">
+            </div>
+            <button
+      type="submit">SUBMIT</button>
+        </form>
+    </div>
+  

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Pastrie } from '../pastrie';
 import { PastrieService } from '../pastrie.service';
-import { SearchComponent } from 'src/app/search/search.component';
+
 
 
 @Component({

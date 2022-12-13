@@ -4,6 +4,7 @@ import { Pastrie } from '../pastrie';
 import { PastrieService } from '../pastrie.service';
 
 
+
 @Component({
   selector: 'app-pastrie-description',
   templateUrl: './pastrie-description.component.html',

@@ -7,8 +7,9 @@ import { PastrieModule } from './pastrie/pastrie.module';
 import { SearchModule } from './search/search.module';
 import { Routes, RouterModule } from '@angular/router';
 import { PastriesComponent } from './pastrie/pastries/pastries.component';
-import { LoginComponent } from './login-component/login-component.component';
 import { PastrieDescriptionComponent } from './pastrie/pastrie-description/pastrie-description.component';
+import { LoginComponent } from './pastrie/login-component/login-component.component';
+import { CreatePastrieComponent } from './pastrie/create-pastrie/create-pastrie.component';
 
 
 
@@ -29,6 +30,10 @@ const pastriesRoutes: Routes = [
     component: LoginComponent
   }, 
   {
+    path: 'addPastrie', 
+    component: CreatePastrieComponent
+  },
+  {
     path: 'pastrie/:id', 
     component: PastrieDescriptionComponent
   }
@@ -36,8 +41,7 @@ const pastriesRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    HideButtonDirective,
-    LoginComponent,
+    HideButtonDirective
   ],
   imports: [
     BrowserModule,

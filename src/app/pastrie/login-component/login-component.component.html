@@ -1,0 +1,43 @@
+<div class="card" style="width: 50%; margin:2rem auto">
+  <!-- <h1 class=" card-header">
+      Connection
+  </h1> -->
+  <div class="card-body">
+      <h1 class="card-title">Connection</h1>
+      <div *ngIf="password.invalid && (password.dirty || password.touched)"
+    class="alert">
+
+  <div *ngIf="password.errors?.['required']">
+    Le mot de passe est requis
+  </div>
+  <div *ngIf="password.errors?.['minlength']">
+    Le mot de passe doit contenir au moins 8 characteres
+  </div>
+  
+    </div>
+    <div *ngIf="email.invalid && (email.dirty || email.touched)"
+    class="alert">
+
+    <div *ngIf="password.errors?.['required']">
+        L'email est requis
+      </div>
+      <div *ngIf="password.errors?.['email']">
+        L'email est requis
+      </div>
+</div>
+      <form (ngSubmit)="onSubmit(formLogin)" #formLogin="ngForm">
+          <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Email</label>
+              <input name="email" ngModel required  email  type="email" #email="ngModel" class="form-control" id="exampleInputEmail1"
+                  aria-describedby="emailHelp">
+          </div>
+          <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Password</label>
+              <input name="password" minlength="8"  ngModel required #password="ngModel" type="password" class="form-control" id="exampleInputPassword1">
+          </div>
+          <button
+    [disabled]="!formLogin.valid"
+    type="submit">SUBMIT</button>
+      </form>
+  </div>
+</div>

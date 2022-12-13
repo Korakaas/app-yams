@@ -5,7 +5,7 @@
         <p class="card-text">{{pastrie.description}}</p>
         <ul class="p-0" *ngIf="pastrie.tags">
             <li class="list-inline-item justify-content-start" *ngFor="let tag of pastrie.tags">
-                <span class="  badge text-white text-bg-info">{{tag}}</span> <!--{{tag | pastrieTagColor}}-->
+                <span class=" {{tag | pastrieTagColor}}  badge text-white text-bg-info">{{tag}}</span> <!--{{tag | pastrieTagColor}}-->
             </li>
         </ul>
     
