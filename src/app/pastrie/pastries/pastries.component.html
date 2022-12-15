@@ -1,5 +1,8 @@
 
 <app-search (searchResult)="filterPastries($event)"></app-search>
+
+<!-- <app-paginate (pastries)="pagination($event)"></app-paginate> -->
+
 <div *ngIf="pastries"> <div class="container-fluid">
   <div class="row">
     <div class="col">
@@ -39,9 +42,6 @@
   </div>
 </div>
 </div>
- 
-
-
 <!-- <ul *ngIf="pastries">
     <li class="list-inline-item" *ngFor="let pastrie of pastries">
         <span class=" badge text-bg-primary">{{pastrie.id}}</span> {{pastrie.name}}

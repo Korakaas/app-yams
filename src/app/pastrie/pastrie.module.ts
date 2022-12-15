@@ -11,7 +11,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { PastrieDescriptionComponent } from './pastrie-description/pastrie-description.component';
 import { LoginComponent } from './login-component/login-component.component';
 import { CreatePastrieComponent } from './create-pastrie/create-pastrie.component';
-
+import { PaginateComponent } from './paginate/paginate.component';
 const pastriesRoutes: Routes = [
   {
     path: 'pastries', 
@@ -39,7 +39,8 @@ const pastriesRoutes: Routes = [
     PastrieTagColorPipe,
     LoginComponent,
     PastrieDescriptionComponent,
-    CreatePastrieComponent
+    CreatePastrieComponent,
+    PaginateComponent
 
   ],
   exports:

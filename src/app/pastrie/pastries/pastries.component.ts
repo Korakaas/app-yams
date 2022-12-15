@@ -30,6 +30,12 @@ export class PastriesComponent implements OnInit // Interface OnInit
     // this.pastries = [];
     this.pastries = event;
   }
+
+  pagination(event: Pastrie[])
+  {
+    this.pastries = event;
+  }
+
   getPastrie(id:string)
   {
     this.selectedPastry = this.pastrieServiceInstance.getPastrie(id);

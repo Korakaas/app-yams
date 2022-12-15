@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter} from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable, map } from 'rxjs';
 import { Pastrie } from '../pastrie';
 @Component({
   selector: 'app-create-pastrie',
@@ -7,15 +8,33 @@ import { Pastrie } from '../pastrie';
   styleUrls: ['./create-pastrie.component.scss']
 })
 export class CreatePastrieComponent implements OnInit {
-  @Output() pastrieToAdd: EventEmitter<any> = new EventEmitter();
+  pastrieForm!: FormGroup;
+  formPreview$!:Observable<Pastrie>; //convention nom observable se termine par un $
 
-  constructor() { }
+  constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+    this.pastrieForm = this.formBuilder.group( 
+      {
+        ref: [null, [Validators.required, Validators.minLength(8)]],
+        name: [null, Validators.required], 
+        description: [null, Validators.required], 
+        quantity: [null, Validators.required], 
+        order: [null, Validators.required], 
+        url: [null], 
+      });
+      //pour que la forme de l'object renvoyé ressemble à une pastrie on le transform grace à pipe et map
+    this.formPreview$ = this.pastrieForm.valueChanges.pipe(
+      map(formValue => ({
+        ...formValue, // toutes les données du formulaire de base
+        tags: [], 
+        like:""
+      }))
+    )
   }
-  onSubmit(form:NgForm): void
+
+  onSubmitForm()
   {
-    console.log(form)
-    this.pastrieToAdd.emit(form)
+    console.log(this.pastrieForm.value)
   }
 }

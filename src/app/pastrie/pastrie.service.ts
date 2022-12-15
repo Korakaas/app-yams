@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { PASTRIES, INGREDIENTS_LISTS } from './pastries/mock-pastries';
 import { Pastrie, List } from './pastrie';
+import { map, Observable, of, take } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+// libraire utile pour le traitement de données
+import * as _ from 'lodash';
 
 @Injectable({
   providedIn: 'root' //injecter de manière globale -> une seule instance des données, tout le temps le même tableau de données
@@ -9,11 +13,13 @@ import { Pastrie, List } from './pastrie';
 export class PastrieService {
 
   private allPastries: Pastrie[];
+  private allPastries$: Observable<Pastrie[]>;
   private pastrie: Pastrie|null;
   private PastrieIngredientsList: string[];
   private ingredientsList: List[] = INGREDIENTS_LISTS;
    searchedPastrie: Pastrie[]|null;
-  constructor() { }
+  private pages: number[];
+  constructor(private http: HttpClient) { }
 
   getPastries(): Pastrie[]
   {
@@ -26,6 +32,11 @@ export class PastrieService {
   {
     this.pastrie = this.allPastries?.find( pastrie => pastrie.id === id) || null;
     return this.pastrie!;
+  }
+
+  getPastriesCount():number
+  {
+    return this.getPastries().length;
   }
 
   getPastrieIngredientsList(pastrieId:string): string[]
@@ -74,4 +85,23 @@ export class PastrieService {
       console.log(this.searchedPastrie)
        return this.searchedPastrie!
   }
+
+  paginate(page: number, limit:number ): Pastrie[]
+  {
+    let begin = (page -1 ) * limit; 
+    let end = (begin + limit)
+    this.allPastries$ = of(this.getPastries());
+
+    this.allPastries$.pipe(
+      map(pastries => pastries.slice(begin, end),
+      take(limit)
+    )
+  ).subscribe(pastries => {
+    this.allPastries = pastries;
+    console.log(this.allPastries)
+  })
+  return this.allPastries;
+}
+
+
 }

@@ -10,6 +10,8 @@ import { PastriesComponent } from './pastrie/pastries/pastries.component';
 import { PastrieDescriptionComponent } from './pastrie/pastrie-description/pastrie-description.component';
 import { LoginComponent } from './pastrie/login-component/login-component.component';
 import { CreatePastrieComponent } from './pastrie/create-pastrie/create-pastrie.component';
+import { PaginateComponent } from './pastrie/paginate/paginate.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -18,7 +20,16 @@ import { CreatePastrieComponent } from './pastrie/create-pastrie/create-pastrie.
 const pastriesRoutes: Routes = [
   {
     path: 'pastries', 
-    component: PastriesComponent
+    children: [
+      {
+        path: 'addPastrie', 
+        component: CreatePastrieComponent
+      },
+      {
+        path: ':id', // à mettre en dernier dans la liste des children
+        component: PastrieDescriptionComponent
+      }
+    ]
   },
   {
     path:'',
@@ -28,26 +39,19 @@ const pastriesRoutes: Routes = [
   {
     path: 'login',
     component: LoginComponent
-  }, 
-  {
-    path: 'addPastrie', 
-    component: CreatePastrieComponent
-  },
-  {
-    path: 'pastrie/:id', 
-    component: PastrieDescriptionComponent
   }
 ];
 @NgModule({
   declarations: [
     AppComponent,
-    HideButtonDirective
+    HideButtonDirective,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     PastrieModule,
-    SearchModule, 
+    SearchModule,
+    HttpClientModule, 
     RouterModule.forRoot(pastriesRoutes)  
   ],
   providers: [],
