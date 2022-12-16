@@ -2,6 +2,7 @@
   <!-- <h1 class=" card-header">
       Connection
   </h1> -->
+  <div class="col-9" *ngIf="msgError">{{msgError}}</div>
   <div class="card-body">
       <h1 class="card-title">Connection</h1>
       <div *ngIf="password.invalid && (password.dirty || password.touched)"

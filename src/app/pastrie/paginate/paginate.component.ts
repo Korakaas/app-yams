@@ -1,4 +1,3 @@
-import { literalMap } from '@angular/compiler';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Pastrie } from '../pastrie';
 import { PastrieService } from '../pastrie.service';
@@ -9,44 +8,94 @@ import { PastrieService } from '../pastrie.service';
   styleUrls: ['./paginate.component.scss']
 })
 export class PaginateComponent implements OnInit {
-  perPage: number = 3;
-  total: number;
-  page: number = 1;
-  presentPage = 1;
+  perPage: number = 3; //nb de pastries/pages
+  total: number = 0;//total des pastries
+  pages: number[] = []; //pages num
+  currentPage: number = 0;
+  numberPages: number = 0; //nombre de pages
   pastries: Pastrie[];
-  @Output() pastriesPages: EventEmitter<any> = new EventEmitter();
-  constructor(private ps:PastrieService) { }
+  @Output() setPaginate: EventEmitter<{ start: number; end: number }> = new EventEmitter();
+
+  constructor(private pS:PastrieService) { }
 
   ngOnInit(): void {
-    this.getTotalPastries();
-    
+    this.init$();
+    this.pS.sendCurrentNumberPage.subscribe(numberPage => {
+      console.log()
+      this.currentPage = numberPage;
+      this.init$(this.currentPage);
+    });
+  }
+// init(page : number = 1)
+// {
+//   this.pS.getPastriesCount().subscribe(count => {
+//     this.numberPages = Math.ceil(count / this.perPage);
+//     this.pages = [];
+//     this.currentPage = page;
+//     for (let i = 1; i < this.numberPages + 1; i++) {
+//         this.pages.push(i);
+//     }
+// })
+// }
+// init(page : number = 1) {
+//   this.total = this.pS.getPastriesCount();
+//   this.numberPages = Math.ceil(this.total / this.perPage);
+//   this.currentPage = page;
+//   this.pages = [];
+//   for (let i = 1; i < this.numberPages + 1; i++) {
+//     this.pages.push(i);
+//   }
+// }
 
+init$(page : number = 1) {
+  this.pS.getPastriesCount$().subscribe(count => {
+    console.log(count)
+    this.total = count;
+    console.log(this.total)
+    this.numberPages = Math.ceil(this.total / this.perPage);
+    console.log(this.numberPages)
+  this.currentPage = page;
+  console.log(this.currentPage)
+  this.pages = [];
+  for (let i = 1; i < this.numberPages + 1; i++) {
+    this.pages.push(i);
   }
-  getCountOPages()
+  console.log(this.pages)
+  })
+}
+
+
+  selectedPage(page: number)
   {
-    return Math.ceil(this.ps.getPastriesCount()/ this.perPage);
+    this.currentPage = page;
+    this.setPaginate.emit(this.paginate(page));
+    this.pS.currentPage(this.currentPage); // Mettre à jour les autres components paginate
   }
-  getTotalPastries()
-  {
-    this.total = this.ps.getPastriesCount();
-  }
-  next()
-  {
-    if(this.presentPage < this.getCountOPages()) {
-      this.presentPage += 1;
-      this.pastries = this.ps.paginate(this.presentPage, this.perPage)
+
+
+  next() {
+    if (this.currentPage >= this.numberPages) {
+      this.currentPage = 1;
+    } else {
+      this.currentPage++;
     }
-    this.pastriesPages.emit(this.pastries)
-    
+    this.setPaginate.emit(this.paginate(this.currentPage)); // Émettre la page courante
+    this.pS.currentPage(this.currentPage); // Mettre à jour les autres components paginate
   }
-  previous()
-  {
-    if(this.presentPage > 1)
-    { 
-      this.presentPage -= 1;
-      this.pastries = this.ps.paginate(this.presentPage, this.perPage)
-      this.pastriesPages.emit(this.pastries)
+  previous() {
+    if (this.currentPage == 1) {
+      this.currentPage = this.numberPages;
+    } else {
+      this.currentPage--;
     }
-    
+    this.setPaginate.emit(this.paginate(this.currentPage));
+    this.pS.currentPage(this.currentPage); // Mettre à jour les autres components paginate
+  }
+
+  paginate(page: number): { start: number, end: number } {
+    let start = (page - 1) * this.perPage; // 0 2
+    let end = start + this.perPage; // 2 4
+
+    return { start: start, end: end };
   }
 }

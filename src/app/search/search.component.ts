@@ -9,12 +9,10 @@ import { Pastrie } from '../pastrie/pastrie';
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit {
-  pastrieServiceInterface: PastrieService;
 
   @Output() searchResult: EventEmitter<any> = new EventEmitter();
   //injection de dépendance
-  constructor(pastrieServiceFile: PastrieService) { 
-    this.pastrieServiceInterface = pastrieServiceFile;
+  constructor( private pS: PastrieService) { 
   }
 
   ngOnInit(): void {
@@ -22,8 +20,8 @@ export class SearchComponent implements OnInit {
 
   onSubmit(form:NgForm)
   {
-    const result = this.pastrieServiceInterface.search(form.value['word']);
-    this.searchResult.emit(result)
+    this.pS.search(form.value['word'])?.subscribe(pastries => ( this.searchResult.emit(pastries)))
+    
     //on récupère les données du formulaire
     console.log(form)
     console.log(form.value['word']); // la valeur du champ word

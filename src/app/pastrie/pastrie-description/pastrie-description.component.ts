@@ -20,6 +20,8 @@ export class PastrieDescriptionComponent implements OnInit {
         // permet de récupérer l'identifiant
         const id = this.route.snapshot.paramMap.get('id');
         // TODO récupérez le détail d'une pâtisserie
-        this.pastrie = this.pS.getPastrie(id)!
+        // this.pastrie = this.pS.getPastrie(id)!
+        console.log(id);
+        this.pS.getPastrie(id).subscribe(pastrie => (this.pastrie = pastrie))
   }
 }

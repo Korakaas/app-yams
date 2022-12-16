@@ -10,12 +10,10 @@ export class PastrieDetailsComponent implements OnInit {
   // ingredientsList: List[] = INGREDIENTS_LISTS; //récupération de la liste des listes d'ingrédients
   ingredients:string[] = []; //liste des ingrédients pour la pastrie séclectionnée
   sortRef: string = "asc";
-  pastrieServiceInstance: PastrieService;
 
   @Input() pastrie: Pastrie|null  //récupérée du parent
 
-  constructor(pastrieServiceFile: PastrieService) {
-    this.pastrieServiceInstance = pastrieServiceFile;
+  constructor(private pS: PastrieService) {
    }
   ngOnInit(): void {
 
@@ -28,7 +26,7 @@ export class PastrieDetailsComponent implements OnInit {
       //pastrie?.id indique que si pastrie est un indéfini ou null pas besoin d'aller chercher id
       //tableau vide si jamais indéfini comme ça on a toujours un tableau
       // this.ingredients = this.ingredientsList.find(elem => elem.id === this.pastrie?.id)?.list || [];
-      this.ingredients = this.pastrieServiceInstance.getPastrieIngredientsList(this.pastrie.id);
+      this.pS.getPastrieIngredientsList(this.pastrie.id).subscribe(ingredients => this.ingredients = ingredients)
     }
   }
   AddIngredient(event :Event):void
@@ -47,6 +45,8 @@ export class PastrieDetailsComponent implements OnInit {
       return ingredient !== ingredientD;
     })
     // const filtered = this.ingredients.filter((ingredient:string) => ingredient !== ingredientD)
+
+    
 
     this.ingredients = filtered;
   }

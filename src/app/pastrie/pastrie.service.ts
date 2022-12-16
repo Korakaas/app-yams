@@ -1,53 +1,60 @@
 import { Injectable } from '@angular/core';
 import { PASTRIES, INGREDIENTS_LISTS } from './pastries/mock-pastries';
 import { Pastrie, List } from './pastrie';
-import { map, Observable, of, take } from 'rxjs';
+import { map, Observable, of, take, Subject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 // libraire utile pour le traitement de données
 import * as _ from 'lodash';
+
 
 @Injectable({
   providedIn: 'root' //injecter de manière globale -> une seule instance des données, tout le temps le même tableau de données
                     //on peut le faire pour un seul composant si besoin
 })
 export class PastrieService {
-
+  // convention dans l'API ajoutez votre identifant de base de données
+  private baseUrl = environment.api;
+  private pastriesUrl = 'pastries/'; // votre url locale pour les pâtisseries
+  private apiUrl = encodeURI(this.baseUrl + this.pastriesUrl)
   private allPastries: Pastrie[];
-  private allPastries$: Observable<Pastrie[]>;
-  private pastrie: Pastrie|null;
   private PastrieIngredientsList: string[];
   private ingredientsList: List[] = INGREDIENTS_LISTS;
    searchedPastrie: Pastrie[]|null;
   private pages: number[];
+
+  sendCurrentNumberPage = new Subject<number>();
   constructor(private http: HttpClient) { }
 
-  getPastries(): Pastrie[]
+  getPastries():Observable<Pastrie[]>
   {
-    return this.allPastries = PASTRIES.sort((a,b) => {
-      return b.quantity - a.quantity;
-    });
+    return this.http.get<Pastrie[]>(this.apiUrl)
   }
   
-  getPastrie(id:string|null): Pastrie
+  getPastrie(id:string|null): Observable<Pastrie>
   {
-    this.pastrie = this.allPastries?.find( pastrie => pastrie.id === id) || null;
-    return this.pastrie!;
+    return this.http.get<Pastrie>(this.apiUrl +  id)
   }
 
-  getPastriesCount():number
+  getPastriesCount$():Observable<number>
   {
-    return this.getPastries().length;
+    return this.http.get<number>(this.apiUrl+"count")
   }
-
-  getPastrieIngredientsList(pastrieId:string): string[]
+ 
+  getPastriesCount():number {
+      return PASTRIES.length
+    }
+  getPastrieIngredientsList(pastrieId:string):Observable<string[]>
   {
-    this.PastrieIngredientsList = this.ingredientsList.find(list =>list.id === pastrieId)?.list || [];
-    return this.PastrieIngredientsList;
+    console.log(this.baseUrl+"ingredients/" +  pastrieId)
+    return this.http.get<string[]>(this.baseUrl+"ingredients/" +  pastrieId)
   }
-  search(pastrieName:string): Pastrie[]
+  search(pastrieName:string): Observable<Pastrie[]>
   {
     console.log('test');
     console.log(pastrieName);
+
+    return this.http.post<Pastrie[]>(this.apiUrl, {pastrieName})
     // this.getPastries()?.forEach(pastrie => 
     //   {
         
@@ -58,50 +65,45 @@ export class PastrieService {
     //     this.searchedPastrie?.push(pastrie);
     //     console.log(this.searchedPastrie)
     //    }})
-      this.searchedPastrie = this.getPastries().filter((pastries) => {
-      return pastries.name.toLowerCase().includes(pastrieName.toLowerCase())})
+      // this.searchedPastrie = PASTRIES.filter((pastries) => {
+      // return pastries.name.toLowerCase().includes(pastrieName.toLowerCase())})
 
-      console.log(this.searchedPastrie)
-       return this.searchedPastrie!
+      // console.log(this.searchedPastrie)
+      //  return this.searchedPastrie!
   }
 
-  add(pastrieName:string): Pastrie[]
+  add(pastrie: Pastrie): Observable<string>
   {
-    console.log('test');
-    console.log(pastrieName);
-    // this.getPastries()?.forEach(pastrie => 
-    //   {
-        
-    //    if(pastrie.name.toLowerCase().includes(pastrieName.toLowerCase()))
-    //    {
-    //     // console.log(pastrie);
-    //     // console.log(pastrieName);
-    //     this.searchedPastrie?.push(pastrie);
-    //     console.log(this.searchedPastrie)
-    //    }})
-      this.searchedPastrie = this.getPastries().filter((pastries) => {
-      return pastries.name.toLowerCase().includes(pastrieName.toLowerCase())})
-
-      console.log(this.searchedPastrie)
-       return this.searchedPastrie!
+    console.log(pastrie)
+    console.log(this.apiUrl + "addPastrie")
+    return this.http.post<string>(this.apiUrl + "addPastrie",{pastrie}) 
   }
 
-  paginate(page: number, limit:number ): Pastrie[]
-  {
-    let begin = (page -1 ) * limit; 
-    let end = (begin + limit)
-    this.allPastries$ = of(this.getPastries());
 
-    this.allPastries$.pipe(
-      map(pastries => pastries.slice(begin, end),
-      take(limit)
-    )
-  ).subscribe(pastries => {
-    this.allPastries = pastries;
-    console.log(this.allPastries)
-  })
-  return this.allPastries;
+  // paginate(start: number, end:number ): Pastrie[]
+  // {
+  //   return PASTRIES.sort(
+  //     (a, b) => { return a.order - b.order }
+  //   ).slice(start, end);
+  // }
+  paginate$(start: number, end:number ):Observable<Pastrie[]>
+  {
+    let slicedPastries:Pastrie[] =[];
+    return this.http.get<Pastrie[]>(this.apiUrl).pipe(
+      map(pastriesAPI => {
+        console.log(pastriesAPI)
+        slicedPastries = pastriesAPI.sort(
+          (a, b) => { return a.order - b.order }
+        ).slice(start, end);
+        console.log(slicedPastries)
+        return slicedPastries
+      }
+
+
+    ))
+  }
+  currentPage(numberPage: number) {
+  return this.sendCurrentNumberPage.next(numberPage);
 }
-
 
 }

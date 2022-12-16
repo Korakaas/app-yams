@@ -4,7 +4,7 @@
     </h1> -->
     <div class="card-body">
         <h1 class="card-title">Ajouter une pâtisserie</h1>
-  
+  <p *ngIf="resultAdd">{{resultAdd}}</p>
   </div>
         <form [formGroup]="pastrieForm">
             <div class="mb-3">

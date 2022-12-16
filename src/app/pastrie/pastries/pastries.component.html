@@ -1,6 +1,5 @@
 
 <app-search (searchResult)="filterPastries($event)"></app-search>
-
 <!-- <app-paginate (pastries)="pagination($event)"></app-paginate> -->
 
 <div *ngIf="pastries"> <div class="container-fluid">
@@ -14,13 +13,14 @@
  <label [for]="test">Blabla</label>
  <div [class.highlight] = "isHighLight">testtest</div>
  <button [style.color] = "isRed? 'red' : 'green'" >Bouton</button> -->
+
     </div>
     <div class="col-9" *ngIf="pastries">
       <h1>{{titlePage}}</h1> <!--double accolage permet datainding mais que dans un sens -->
       <div class="card mb-2" appBorderCard = 'red' *ngFor="let pastrie of pastries" >
           <div class="card-header">Pâtisserie</div>
           <div class="card-body">
-              <h5 class="card-title"><a routerLink="/pastrie/{{pastrie.id}}" >{{pastrie.name}}</a></h5>
+              <h5 class="card-title"><a routerLink="/pastries/{{pastrie.id}}" >{{pastrie.name}}</a></h5>
               <p class="card-text">{{pastrie.description}}</p>
               <ul class="p-0" *ngIf="pastrie.tags">
                   <li class="list-inline-item justify-content-start" *ngFor="let tag of pastrie.tags">
@@ -40,6 +40,7 @@
       </div>
     </div>
   </div>
+  <app-paginate (setPaginate)="paginate($event)"></app-paginate>
 </div>
 </div>
 <!-- <ul *ngIf="pastries">

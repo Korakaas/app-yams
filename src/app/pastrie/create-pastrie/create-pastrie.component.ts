@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, map } from 'rxjs';
 import { Pastrie } from '../pastrie';
+import { PastrieService } from '../pastrie.service';
 @Component({
   selector: 'app-create-pastrie',
   templateUrl: './create-pastrie.component.html',
@@ -9,9 +10,10 @@ import { Pastrie } from '../pastrie';
 })
 export class CreatePastrieComponent implements OnInit {
   pastrieForm!: FormGroup;
-  formPreview$!:Observable<Pastrie>; //convention nom observable se termine par un $
+  formPreview$!:Observable<Pastrie>; 
+  resultAdd:string;//convention nom observable se termine par un $
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private ps: PastrieService) { }
 
   ngOnInit(): void {
     this.pastrieForm = this.formBuilder.group( 
@@ -36,5 +38,6 @@ export class CreatePastrieComponent implements OnInit {
   onSubmitForm()
   {
     console.log(this.pastrieForm.value)
+    this.ps.add(this.pastrieForm.value).subscribe(result => this.resultAdd = result)
   }
 }

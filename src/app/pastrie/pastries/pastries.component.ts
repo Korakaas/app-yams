@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Pastrie } from '../pastrie';
 import { PastrieService } from '../pastrie.service';
+import { PASTRIES } from './mock-pastries';
 
 
 
@@ -14,16 +15,14 @@ export class PastriesComponent implements OnInit // Interface OnInit
   titlePage: string = "Page principale : Liste des pâtisseries";
   pastries: Pastrie[]|null;
   selectedPastry: Pastrie|null;
-  pastrieServiceInstance: PastrieService;
   @Input() search: string|null;
 
   //injection de dépendance
-  constructor(private pastrieServiceFile: PastrieService) {
-    this.pastrieServiceInstance = pastrieServiceFile;
+  constructor(private pS: PastrieService) {
    }
   getPastries()
   {
-    this.pastries = this.pastrieServiceInstance.getPastries()
+    this.pS.getPastries().subscribe(pastries => (this.pastries = pastries))
   }
   filterPastries(event: Pastrie[])
   {
@@ -38,17 +37,19 @@ export class PastriesComponent implements OnInit // Interface OnInit
 
   getPastrie(id:string)
   {
-    this.selectedPastry = this.pastrieServiceInstance.getPastrie(id);
+    this.pS.getPastrie(id).subscribe(pastrie => (this.selectedPastry = pastrie))
   }
   ngOnInit(): void // permet d'initialiser au montage du component
   {
-    this.getPastries(); //on récupère le tableau des pâtisseries à chaque fois que le composant html se créer
+     this.pS.paginate$(0,3).subscribe(pastries => this.pastries = pastries);
+    // this.pastries = this.pS.paginate(0, 3);
+    // this.getPastries(); //on récupère le tableau des pâtisseries à chaque fois que le composant html se créer
   }
   filter(search: string): boolean
   {
     this.pastries = [];
     // console.log(`recherche ${search}`)
-    this.pastrieServiceInstance.getPastries()?.forEach(PASTRIE => 
+    PASTRIES.forEach(PASTRIE => 
      {
       if(PASTRIE.name.toLowerCase().includes(search.toLowerCase()))
       {
@@ -78,9 +79,12 @@ export class PastriesComponent implements OnInit // Interface OnInit
     // {this.filter(this.search)}
     // if(this.search ==="")
     // {
-    //   this.pastries = this.pastrieServiceInstance.getPastries();
+    //   this.pastries = this.pS.getPastries();
     // } 
   }
 
-
+// Mise à jour de la pagination
+paginate($event: any) {
+   this.pS.paginate$($event.start, $event.end).subscribe(pastries => {this.pastries = pastries});
+}
 }

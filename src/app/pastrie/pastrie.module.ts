@@ -12,25 +12,9 @@ import { PastrieDescriptionComponent } from './pastrie-description/pastrie-descr
 import { LoginComponent } from './login-component/login-component.component';
 import { CreatePastrieComponent } from './create-pastrie/create-pastrie.component';
 import { PaginateComponent } from './paginate/paginate.component';
-const pastriesRoutes: Routes = [
-  {
-    path: 'pastries', 
-    component: PastriesComponent
-  },
-  {
-    path:'',
-    redirectTo: '/pastries',
-    pathMatch: 'full'
-  },
-  {
-    path: 'login',
-    component: LoginComponent
-  }, 
-  {
-    path: 'pastrie/:id', 
-    component: PastrieDescriptionComponent
-  }
-];
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { AppRoutingModule } from '../router/router.module';
+
 @NgModule({
   declarations: [
     PastriesComponent,
@@ -56,7 +40,7 @@ const pastriesRoutes: Routes = [
     FormsModule,
     BrowserModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(pastriesRoutes)  
+    AppRoutingModule
   ]
 })
 export class PastrieModule { }
