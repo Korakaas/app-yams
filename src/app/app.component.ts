@@ -1,4 +1,6 @@
-import { Component} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from './auth.service';
 
 
 @Component({
@@ -6,13 +8,40 @@ import { Component} from '@angular/core';
   templateUrl: './app.component.html', //fichier template du composent
   styleUrls: ['./app.component.scss'] // associer le composent à une ou pls feuille de style
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'app-yams';
   search:string|null = null;
+  token:string|undefined;
   
-  searching(event: Event)
+  constructor(private aS: AuthService, private router: Router)
   {
-    this.search = (event.target as HTMLInputElement).value
+
+  }
+  // searching(event: Event)
+  // {
+  //   this.search = (event.target as HTMLInputElement).value
+  // }
+  ngOnInit(): void {
+    this.isloggedin()
+  }
+   
+  // ngOnInit()
+  // {
+  //   this.isloggedin()
+  // }
+  ngDoCheck(): void
+  {
+    this.isloggedin()
+  }
+  logout()
+  {
+    console.log("test")
+    this.aS.logout()
+    this.router.navigate([""])
+  }
+  isloggedin()
+  {
+    this.token = this.aS.getToken()
   }
   // onSubmitForm () {
 

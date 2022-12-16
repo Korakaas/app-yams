@@ -10,7 +10,7 @@ import { User } from './user';
 })
 export class AuthService {
   private baseUrl = environment.api + 'login';
-  private token ='string';
+  private token:string|undefined;
   constructor(private http:HttpClient) { }
   // méthode d'authentification
   auth(email: string, password: string): Observable<User>
@@ -18,7 +18,11 @@ export class AuthService {
     this.token="UnToken!"
     return this.http.post<User>(this.baseUrl, {email, password} )
   }
-
+  logout()
+  {
+    this.token = undefined;
+    // console.log(this.token)
+  }
   getToken()
   {
     return this.token;

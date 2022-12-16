@@ -37,8 +37,8 @@ const pastriesRoutes: Routes = [
     component: LoginComponent,
   },
   {
-    path: 'dashboard',   
-    component: DashboardComponent,
+    path: 'dashboard',   canActivate:[GuardService],
+    component: DashboardComponent, 
 
   }
 ];

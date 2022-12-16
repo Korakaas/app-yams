@@ -15,7 +15,7 @@ export class PastriesComponent implements OnInit // Interface OnInit
   titlePage: string = "Page principale : Liste des pâtisseries";
   pastries: Pastrie[]|null;
   selectedPastry: Pastrie|null;
-  @Input() search: string|null;
+  // @Input() search: string|null;
 
   //injection de dépendance
   constructor(private pS: PastrieService) {
@@ -45,28 +45,28 @@ export class PastriesComponent implements OnInit // Interface OnInit
     // this.pastries = this.pS.paginate(0, 3);
     // this.getPastries(); //on récupère le tableau des pâtisseries à chaque fois que le composant html se créer
   }
-  filter(search: string): boolean
-  {
-    this.pastries = [];
-    // console.log(`recherche ${search}`)
-    PASTRIES.forEach(PASTRIE => 
-     {
-      if(PASTRIE.name.toLowerCase().includes(search.toLowerCase()))
-      {
-        // console.log(`après si : ${mockPastrie.name}`)
-        this.pastries?.push(PASTRIE);
-        console.log(this.pastries)
-      }})
-       console.log(this.pastries)
-    if(this.pastries)
-    {
-      return true;
-    }
-    else
-    {
-      return false;
-    }
-  }
+  // filter(search: string): boolean
+  // {
+  //   this.pastries = [];
+  //   // console.log(`recherche ${search}`)
+  //   PASTRIES.forEach(PASTRIE => 
+  //    {
+  //     if(PASTRIE.name.toLowerCase().includes(search.toLowerCase()))
+  //     {
+  //       // console.log(`après si : ${mockPastrie.name}`)
+  //       this.pastries?.push(PASTRIE);
+  //       console.log(this.pastries)
+  //     }})
+  //      console.log(this.pastries)
+  //   if(this.pastries)
+  //   {
+  //     return true;
+  //   }
+  //   else
+  //   {
+  //     return false;
+  //   }
+  // }
   // selectPastry(pastry: Pastrie): void
   // {
   //   this.selectedPastry = pastry;

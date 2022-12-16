@@ -12,17 +12,15 @@ export class GuardService implements CanActivate {
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot): any | boolean {
           const token = this.aS.getToken();
-          console.log(state);
-          console.log(token);
-        if(token =="" || token == null)
+          // console.log(token);
+        if(token)
         {
-          // this.router.navigate([''])
-          return false;
-
+          return true;
         }
-        else{
-          // this.router.navigate(["login"])
-          return true
+        else
+        {
+          this.router.navigate([""])
+          return false;
         }
 
     }

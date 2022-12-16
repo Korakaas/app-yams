@@ -8,11 +8,18 @@
         <a class="navbar-brand" href="#">App-Yam</a>
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" routerLink="/login" routerLinkActive="active">Se connecter</a>
-            <a class="nav-link active" routerLink="pastries/addPastrie" routerLinkActive="active">Ajouter une pâtisserie</a>
+            <a class="nav-link " *ngIf="token"  routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+          <li class="nav-item">
+            <a class="nav-link " *ngIf="token"  routerLink="pastries/addPastrie" routerLinkActive="active">Ajouter une pâtisserie</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link " *ngIf="!token"  routerLink="/login" routerLinkActive="active">Se connecter</a>
+          </li>
+
+          <li>
+            <a class="nav-link " *ngIf="token" (click)="logout()">Se déconnecter</a>
+         </li>
         </ul>
-        
         <!-- <form  class="d-flex" role="search">
           <input (keyup.enter) = "searching($event)" name ="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         </form> -->
@@ -25,4 +32,5 @@
   </nav>
   <router-outlet></router-outlet> <!--la valeur qui fait référence à la valeur parent c'est pas entre crochet -->
 </div>
+
 
